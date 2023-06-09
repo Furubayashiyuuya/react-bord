@@ -12,9 +12,19 @@ export const Test = () => {
   const [threads, setThreads] = useState([]);
 
   useEffect(() => {
-    fetch( 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=1')
+  /*  fetch( 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=1')
     .then(res => res.json())
     .then((apiData)=> setThreads(apiData));
+  */
+ const getthread = async() =>{
+try{
+  const res = await axios.get('https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=1');
+  setThreads(res.data);
+}catch(err){
+  console.log(err);
+}
+getthread();
+ }
   },[]);
 
  

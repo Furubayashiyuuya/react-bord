@@ -12,6 +12,7 @@ export const Thread = () => {
   const {threadId} = useParams();
 
   useEffect(() => {
+    
    fetch( 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=0')
     .then(res => res.json())
     .then((apiData)=> setThreads(apiData)); 
