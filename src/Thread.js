@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
-
 import { BrowserRouter,Routes,Route,Link } from "react-router-dom";
+import axios from 'axios';
 
 import './App.css';
 import NewThread from './NewThread';
@@ -12,13 +11,16 @@ export const Thread = () => {
   const {threadId} = useParams();
 
   useEffect(() => {
-    
-   fetch( 'https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=0')
-    .then(res => res.json())
-    .then((apiData)=> setThreads(apiData)); 
+const getthread = async() =>{
+  try{
+    const res = await axios.get('https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=1');
+    setThreads(res.data);
+  }catch(err){
+    console.log(err);
+  }
+   }
+   getthread();
   },[]);
-
- 
 
   return (
     <div>
