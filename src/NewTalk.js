@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import {Link, useNavigate } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
 
 export const NewThread = () => {
-  const[title,setTitle] = useState("");
-  
+  const[post,setpost] = useState("");
+  const {threadId} = useParams();
   const navigate = useNavigate ();
 
   const click = async(e) =>{
      try {
-      const response = await axios.post("https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads", { title });
+      const response = await axios.post(`https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads/{${threadId}}/post?offset=1`, { post });
       const newThreadId = response.data.id;
       navigate(`/thread/${newThreadId}`);
     } catch (error) {
@@ -23,12 +24,12 @@ export const NewThread = () => {
     <div className='addbord'>
    <p>スレッド追加</p>
     <input 
-    type='title'
-    value={title.id}
-    onChange={(e) =>setTitle(e.target.value)}
+    type='post'
+    value={post}
+    onChange={(e) =>setpost(e.target.value)}
     name='newthreadtitle'
     ></input>
-   <Link to="/thread" title={title}>
+   <Link to="/thread/" title={post}>
     <button onClick={click}>作成</button>
     </Link>
    

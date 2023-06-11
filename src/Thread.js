@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import './App.css';
 import NewThread from './NewThread';
-
+import ThreadTalk from './ThreadTalk';
 export const Thread = () => {
   const [threads, setThreads] = useState([]);
   const {threadId} = useParams();
@@ -15,6 +15,7 @@ const getthread = async() =>{
   try{
     const res = await axios.get('https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads?offset=1');
     setThreads(res.data);
+    threadId(res.id);
   }catch(err){
     console.log(err);
   }
@@ -34,15 +35,24 @@ const getthread = async() =>{
       </BrowserRouter>
       </header>
       <h2>新着スレッド</h2>
+      
+      <BrowserRouter>
       {threads.length > 0 && (
         <ul className="list">
           {threads.map((thread) => (
             <li key={thread.id}>
+            <Link to = {`/thread/${thread.id}`}>
               <div className='thread'>{thread.title}</div>
+            </Link>
+            <Routes>
+              <Route path = {`/thread/${thread.id}`} element = {<ThreadTalk id={thread.id}/>}></Route>
+              
+            </Routes>
             </li>
           ))}
         </ul>
       )}
+</BrowserRouter>
    </div>
   );
 }
