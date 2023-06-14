@@ -7,7 +7,8 @@ export const ThreadTalk = ({ id }) => {
   const { threadId } = useParams();
   const [post, setPost] = useState("");
 
-  const getThread = async () => {
+ //スレッド取得
+  const getTalk = async () => {
     try {
       const res = await axios.get(`https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads/${id}/posts`); 
       setPosts(res.data.posts);
@@ -16,17 +17,25 @@ export const ThreadTalk = ({ id }) => {
     }
   };
 
+  //初期読み込み
   useEffect(() => {
-    getThread();
+    getTalk();
   }, [id]);
 
   const addPost = async () => {
     try {
+      if (!post) {
+        alert("入力してください");
+        return;
+      }
+     //追加処理 
       await axios.post(`https://2y6i6tqn41.execute-api.ap-northeast-1.amazonaws.com/threads/${id}/posts`, { post }); 
       setPost("");
-      getThread();
+    //取得呼び出し 
+      getTalk();
     } catch (error) {
       console.error('投稿エラー:', error);
+      alert("エラーが発生しました。");
     }
   };
 
@@ -38,7 +47,8 @@ export const ThreadTalk = ({ id }) => {
         <ul className="talklist">
           {posts.map((post) => (
             <li key={post.id}>
-              <p>{post.post}</p>
+              <p>ID:{post.id}</p>
+              <p className='text'>{post.post}</p>
             </li>
           ))}
         </ul>

@@ -26,12 +26,13 @@ const getthread = async() =>{
   return (
     <div>
       <header>
-       <h1>掲示板</h1> 
+       <h1>ThreadBord</h1> 
        <BrowserRouter>
-      <div className='addthear'> <Link to="/thread/new">新規スレッド作成</Link></div>
+      <div className='addthear'> <Link to="/thread/new">新規スレッド作成</Link>
       <Routes>
         <Route path='/thread/new' element={<NewThread />}></Route>
       </Routes>
+      </div>
       </BrowserRouter>
       </header>
       <h2>新着スレッド</h2>
